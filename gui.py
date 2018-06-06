@@ -2,7 +2,7 @@ import time
 import wx
 from threading import Thread
 from cardreader import CardReader
-from auth_broker import badgeRead
+from auth_broker import badgeRead, authenticate_and_connect
 
 
 class MyThread(Thread):
@@ -62,12 +62,11 @@ class PanelOne(wx.Panel):
         """
         Check credentials and login
         """
-        stupid_password = "pa$$w0rd!"
-        user_password = self.password.GetValue()
-        if user_password == stupid_password:
-            print("You are now logged in!")
-            pub.sendMessage("frameListener", message="show")
-            self.Destroy()
+        user = {'username': self.user.GetValue(),
+                'pw': self.password.GetValue(),
+                'desktop': ''}
+        if authenticate_and_connect(user):
+            pass
         else:
             print("Username or password is incorrect!")
 

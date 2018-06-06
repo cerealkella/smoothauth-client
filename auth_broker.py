@@ -96,6 +96,20 @@ def registerBadge(badgeHex):
     print('Modified profile. ID: {}'.format(resp.json()["id"]))
 
 
+def authenticate(user):
+    resp = requests.get(SERVER_NAME + '/profile/?user='
+                        + str(user['username']),
+                        auth=(user['username'], user['pw']))
+    if resp.status_code != 200:
+        user['desktop'] = ''
+        return user
+        # raise ApiError('PUT /profile/'.format(resp.status_code), json=task)
+    else:
+        for profile_item in resp.json()['results']:
+            user['desktop'] = format(profile_item['desktop'])
+            return user
+
+
 def registerDesktop(url, creds):
     # found user, no desktop set
     print("Please enter your desktop name: ")
@@ -162,3 +176,12 @@ def badgeRead(badge_hex, badge_num):
                     'pw': plain_pw, 'desktop': desktop}
             rdpConnect(user)
             logger("disconnect")
+
+
+def authenticate_and_connect(user):
+    authenticate(user)
+    if user['desktop'] == '':
+        return False
+    else:
+        rdpConnect(user)
+        return True

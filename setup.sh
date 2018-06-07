@@ -8,7 +8,7 @@ else
   echo "File written."
 fi
 echo "Now installing dependencies..."
-sudo apt install git python3-pip python3-wheel python3-setuptools python3-dev build-essential dpkg-dev libgtk-3-dev libwebkit-dev freeglut3-dev libgstreamer-plugins-base1.0-dev
+sudo apt install git python3-pip python3-wheel python3-setuptools python3-dev build-essential dpkg-dev libgtk-3-dev libgtk2.0-dev libwebkit-dev libwebkitgtk-3.0-dev freeglut3-dev libgstreamer-plugins-base1.0-dev
 sudo -H pip3 install wxpython
 echo "Fixing network config for local domains on Debian Systems..."
 echo "Backing up original..."
